@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" name="Pizza Restaurant" processRef="Process_1" />
+    <bpmn:participant id="Participant_2" name="Customer" processRef="Process_2" />
+    <bpmn:messageFlow id="MessageFlow_1" sourceRef="Task_Order" targetRef="StartEvent_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Clerk" name="Clerk">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TakeOrder</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Chef" name="Chef">
+        <bpmn:flowNodeRef>Task_BakePizza</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1" name="Order Received">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_TakeOrder" name="Take Order">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_BakePizza" name="Bake Pizza">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_1" name="Delivered">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_TakeOrder" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_TakeOrder" targetRef="Task_BakePizza" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_BakePizza" targetRef="EndEvent_1" />
+  </bpmn:process>
+  <bpmn:process id="Process_2" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_2" name="Hungry">
+      <bpmn:outgoing>Flow_Order</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Order" name="Order Pizza">
+      <bpmn:incoming>Flow_Order</bpmn:incoming>
+      <bpmn:outgoing>Flow_Wait</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_2" name="Eat Pizza">
+      <bpmn:incoming>Flow_Wait</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_Order" sourceRef="StartEvent_2" targetRef="Task_Order" />
+    <bpmn:sequenceFlow id="Flow_Wait" sourceRef="Task_Order" targetRef="EndEvent_2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="120" y="80" width="600" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Clerk_di" bpmnElement="Lane_Clerk" isHorizontal="true">
+        <dc:Bounds x="150" y="80" width="570" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Chef_di" bpmnElement="Lane_Chef" isHorizontal="true">
+        <dc:Bounds x="150" y="230" width="570" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_2_di" bpmnElement="Participant_2" isHorizontal="true">
+        <dc:Bounds x="120" y="450" width="600" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="200" y="140" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="180" y="180" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TakeOrder_di" bpmnElement="Task_TakeOrder">
+        <dc:Bounds x="300" y="118" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BakePizza_di" bpmnElement="Task_BakePizza">
+        <dc:Bounds x="450" y="265" width="100" height="80" />
+      </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="600" y="287" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="236" y="158" />
+        <di:waypoint x="300" y="158" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="400" y="158" />
+        <di:waypoint x="425" y="158" />
+        <di:waypoint x="425" y="305" />
+        <di:waypoint x="450" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="550" y="305" />
+        <di:waypoint x="600" y="305" />
+      </bpmndi:BPMNEdge>
+      
+      <bpmndi:BPMNShape id="StartEvent_2_di" bpmnElement="StartEvent_2">
+         <dc:Bounds x="200" y="510" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Order_di" bpmnElement="Task_Order">
+          <dc:Bounds x="300" y="488" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_2_di" bpmnElement="EndEvent_2">
+          <dc:Bounds x="450" y="510" width="36" height="36" />
+      </bpmndi:BPMNShape>
+       <bpmndi:BPMNEdge id="Flow_Order_di" bpmnElement="Flow_Order">
+        <di:waypoint x="236" y="528" />
+        <di:waypoint x="300" y="528" />
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Flow_Wait_di" bpmnElement="Flow_Wait">
+        <di:waypoint x="400" y="528" />
+        <di:waypoint x="450" y="528" />
+       </bpmndi:BPMNEdge>
+
+       <bpmndi:BPMNEdge id="MessageFlow_1_di" bpmnElement="MessageFlow_1">
+         <di:waypoint x="350" y="488"/>
+         <di:waypoint x="350" y="400"/>
+         <di:waypoint x="218" y="400"/>
+         <di:waypoint x="218" y="176"/>
+       </bpmndi:BPMNEdge>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
